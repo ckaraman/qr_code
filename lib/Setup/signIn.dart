@@ -26,7 +26,7 @@ class _LoginPageState extends State<LoginPage> {
               flex: 3,
               fit: FlexFit.loose,
               child: SizedBox(
-                height: 310,
+                height: 300,
                 width: 300,
                 child: FlareActor(
                   'assets/Teddy(2).flr',
