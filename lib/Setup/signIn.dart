@@ -22,39 +22,58 @@ class _LoginPageState extends State<LoginPage> {
         key: _formKey,
         child: Column(
           children: <Widget>[
-            SizedBox(
-              height: 300,
-              width: 300,
-              child: FlareActor('assets/Teddy(2).flr'),
-            ),
-            TextFormField(
-              validator: (input) {
-                if (input.isEmpty) {
-                  return 'Lütfen email giriniz.';
-                }
-              },
-              onSaved: (input) => _email = input,
-              decoration: InputDecoration(
-                labelText: 'Email',
+            Flexible(
+              flex: 3,
+              fit: FlexFit.loose,
+              child: SizedBox(
+                height: 300,
+                width: 300,
+                child: FlareActor(
+                  'assets/Teddy(2).flr',
+                  animation: 'idle',
+                  fit: BoxFit.contain,
+                  alignment: Alignment.topCenter,
+                  shouldClip: true,
+                ),
               ),
             ),
-            TextFormField(
-              validator: (input) {
-                if (input.length < 6) {
-                  return 'Lütfen en az 6 haneli şifre giriniz.';
-                }
-              },
-              onSaved: (input) => _password = input,
-              decoration: InputDecoration(
-                labelText: 'Şifre',
+            Flexible(
+              flex: 1,
+              child: TextFormField(
+                validator: (input) {
+                  if (input.isEmpty) {
+                    return 'Lütfen email giriniz.';
+                  }
+                },
+                onSaved: (input) => _email = input,
+                decoration: InputDecoration(
+                  labelText: 'Email',
+                ),
               ),
-              obscureText: true,
             ),
-            RaisedButton(
-              onPressed: () {
-                signIn(context);
-              },
-              child: Text('Giriş yap'),
+            Flexible(
+              flex: 1,
+              child: TextFormField(
+                validator: (input) {
+                  if (input.length < 6) {
+                    return 'Lütfen en az 6 haneli şifre giriniz.';
+                  }
+                },
+                onSaved: (input) => _password = input,
+                decoration: InputDecoration(
+                  labelText: 'Şifre',
+                ),
+                obscureText: true,
+              ),
+            ),
+            Flexible(
+              flex: 1,
+              child: RaisedButton(
+                onPressed: () {
+                  signIn(context);
+                },
+                child: Text('Giriş yap'),
+              ),
             )
           ],
         ),
