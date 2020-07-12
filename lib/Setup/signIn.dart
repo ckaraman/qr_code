@@ -12,6 +12,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   String _email, _password;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  String _animationName = "idle";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +31,7 @@ class _LoginPageState extends State<LoginPage> {
                 width: 300,
                 child: FlareActor(
                   'assets/Teddy(2).flr',
-                  animation: 'idle',
+                  animation: _animationName,
                   fit: BoxFit.contain,
                   alignment: Alignment.topCenter,
                   shouldClip: true,
@@ -47,8 +48,8 @@ class _LoginPageState extends State<LoginPage> {
                 },
                 onSaved: (input) => _email = input,
                 decoration: InputDecoration(
-                  labelText: 'Email',
-                ),
+                    labelText: 'Email',
+                    hintText: "Thy email adresinizi giriniz"),
               ),
             ),
             Flexible(
@@ -70,6 +71,9 @@ class _LoginPageState extends State<LoginPage> {
               flex: 1,
               child: RaisedButton(
                 onPressed: () {
+                  setState(() {
+                    _animationName = "success";
+                  });
                   signIn(context);
                 },
                 child: Text('Giriş yap'),
