@@ -1,12 +1,25 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
-import 'package:smart_flare/actors/pan_flare_actor.dart';
+import 'package:flutter/rendering.dart';
 import '../Pages/home.dart';
+import '../teddy_controller.dart';
+import '../tracking_text_input.dart';
 
 class LoginPage extends StatefulWidget {
+  LoginPage({Key key, this.title}) : super(key: key);
+  final String title;
   @override
   _LoginPageState createState() => _LoginPageState();
+}
+
+TeddyController _teddyController;
+@override
+Widget build(BuildContext context) {
+  initState() {
+    _teddyController = TeddyController();
+    initState();
+  }
 }
 
 class _LoginPageState extends State<LoginPage> {
@@ -34,7 +47,7 @@ class _LoginPageState extends State<LoginPage> {
                   animation: _animationName,
                   fit: BoxFit.contain,
                   alignment: Alignment.topCenter,
-                  shouldClip: true,
+                  controller: _teddyController,
                 ),
               ),
             ),
