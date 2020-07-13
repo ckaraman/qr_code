@@ -60,7 +60,7 @@ class _TrackingTextInputState extends State<TrackingTextInput> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 20.0),
+      padding: const EdgeInsets.only(bottom: 5.0),
       child: TextFormField(
           decoration:
               InputDecoration(hintText: widget.hint, labelText: widget.label),

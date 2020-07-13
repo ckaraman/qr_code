@@ -17,7 +17,7 @@ class _LoginPageState extends State<LoginPage> {
   TeddyController _teddyController;
   String _email, _password;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  String _animationName = "idle";
+
   @override
   initState() {
     _teddyController = TeddyController();
@@ -30,82 +30,93 @@ class _LoginPageState extends State<LoginPage> {
       appBar: AppBar(
         title: Text('Qrcode ile Mdv takip sistemi'),
       ),
-      body: Form(
-        key: _formKey,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Flexible(
-              flex: 3,
-              fit: FlexFit.loose,
-              child: SizedBox(
-                height: 250,
-                width: 300,
-                child: FlareActor(
-                  'assets/Teddy(2).flr',
-                  animation: _animationName,
-                  fit: BoxFit.contain,
-                  alignment: Alignment.bottomCenter,
-                  controller: _teddyController,
-                ),
-              ),
-            ),
-            Flexible(
-              flex: 1,
-              child: TrackingTextInput(
-                  label: "Email",
-                  hint: "Thy Email adresinizi girin",
-                  onTextChanged: (String value) => _email = value,
-                  onCaretMoved: (Offset caret) {
-                    _teddyController.lookAt(caret);
-                  }),
-              // child: TextFormField(
-              //   validator: (input) {
-              //     if (input.isEmpty) {
-              //       return 'Lütfen email giriniz.';
-              //     }
-              //   },
-              //   onSaved: (input) => _email = input,
-              //   decoration: InputDecoration(
-              //       labelText: 'Email',
-              //       hintText: "Thy email adresinizi giriniz"),
-              //),
-            ),
-            Flexible(
-              flex: 1,
-              child: TrackingTextInput(
-                label: "Şifre",
-                hint: "Daha önceden belirlediğiniz şifrenizi giriniz.",
-                onTextChanged: (String value) => _password = value,
-                onCaretMoved: (Offset caret) {
-                  _teddyController.lookAt(caret);
-                },
-                isObscured: true,
-              ),
-
-              // child: TextFormField(
-              //   validator: (input) {
-              //     if (input.length < 6) {
-              //       return 'Lütfen en az 6 haneli şifre giriniz.';
-              //     }
-              //   },
-              //   onSaved: (input) => _password = input,
-              //   decoration: InputDecoration(
-              //     labelText: 'Şifre',
-              //   ),
-              //   obscureText: true,
-              // ),
-            ),
-            RaisedButton(
-              onPressed: () {
-                setState(() {});
-                signIn(context);
-              },
-              child: Text('Giriş yap'),
-            ),
-          ],
-        ),
+      body: Container(
+        child: Stack(children: <Widget>[
+          // Positioned.fill(
+          //     child: Container(
+          //   decoration: BoxDecoration(
+          //     // Box decoration takes a gradient
+          //     gradient: LinearGradient(
+          //       // Where the linear gradient begins and ends
+          //       begin: Alignment.topRight,
+          //       end: Alignment.bottomLeft,
+          //       // Add one stop for each color. Stops should increase from 0 to 1
+          //       stops: [0.0, 1.0],
+          //       colors: [
+          //         Color.fromRGBO(170, 207, 211, 1.0),
+          //         Color.fromRGBO(93, 142, 155, 1.0),
+          //       ],
+          //     ),
+          //   ),
+          // )),
+          Positioned.fill(
+            child: SingleChildScrollView(
+                padding: EdgeInsets.only(
+                    left: 20.0, right: 20.0, top: devicePadding.top + 30.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Container(
+                      height: 250,
+                      padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                      child: FlareActor(
+                        'assets/Teddy(2).flr',
+                        fit: BoxFit.contain,
+                        alignment: Alignment.bottomCenter,
+                        controller: _teddyController,
+                      ),
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.black38,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(25.0),
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Form(
+                          key: _formKey,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              TrackingTextInput(
+                                  label: "Email",
+                                  hint: "Thy Email adresinizi girin",
+                                  onTextChanged: (String value) =>
+                                      _email = value,
+                                  onCaretMoved: (Offset caret) {
+                                    _teddyController.lookAt(caret);
+                                  }),
+                              TrackingTextInput(
+                                label: "Şifre",
+                                hint:
+                                    "Daha önceden belirlediğiniz şifrenizi giriniz.",
+                                onTextChanged: (String value) =>
+                                    _password = value,
+                                onCaretMoved: (Offset caret) {
+                                  _teddyController.lookAt(caret);
+                                },
+                                isObscured: true,
+                              ),
+                              RaisedButton(
+                                onPressed: () {
+                                  setState(() {});
+                                  signIn(context);
+                                },
+                                child: Text('Giriş yap'),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                )),
+          )
+        ]),
       ),
     );
   }
@@ -117,6 +128,7 @@ class _LoginPageState extends State<LoginPage> {
       try {
         AuthResult user = await FirebaseAuth.instance
             .signInWithEmailAndPassword(email: _email, password: _password);
+        _teddyController.play("success");
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => Home(user: user)));
       } catch (e) {

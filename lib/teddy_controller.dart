@@ -1,13 +1,11 @@
 import 'dart:math';
 import 'dart:ui';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flare_flutter/flare.dart';
 import 'package:flare_dart/math/mat2d.dart';
 import 'package:flare_dart/math/vec2d.dart';
 import 'package:flare_flutter/flare_controls.dart';
 import 'package:flutter/material.dart';
-import 'package:qr_code_app/Pages/home.dart';
 
 class TeddyController extends FlareControls {
   // Store a reference to our face control node (the "ctrl_look" node in Flare)
@@ -29,7 +27,7 @@ class TeddyController extends FlareControls {
   bool _hasFocus = false;
 
   // Project gaze forward by this many pixels.
-  static const double _projectGaze = 80.0;
+  static const double _projectGaze = 60.0;
 
   @override
   bool advance(FlutterActorArtboard artboard, double elapsed) {
