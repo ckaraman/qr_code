@@ -13,28 +13,28 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
-TeddyController _teddyController;
-@override
-Widget build(BuildContext context) {
-  initState() {
-    _teddyController = TeddyController();
-    initState();
-  }
-}
-
 class _LoginPageState extends State<LoginPage> {
+  TeddyController _teddyController;
   String _email, _password;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String _animationName = "idle";
   @override
+  initState() {
+    _teddyController = TeddyController();
+    super.initState();
+  }
+
   Widget build(BuildContext context) {
+    EdgeInsets devicePadding = MediaQuery.of(context).padding;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Kayıt Olun'),
+        title: Text('Qrcode ile Mdv takip sistemi'),
       ),
-      body: Container(
+      body: Form(
         key: _formKey,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Flexible(
               flex: 3,
@@ -46,52 +46,64 @@ class _LoginPageState extends State<LoginPage> {
                   'assets/Teddy(2).flr',
                   animation: _animationName,
                   fit: BoxFit.contain,
-                  alignment: Alignment.topCenter,
+                  alignment: Alignment.bottomCenter,
                   controller: _teddyController,
                 ),
               ),
             ),
             Flexible(
               flex: 1,
-              child: TextFormField(
-                validator: (input) {
-                  if (input.isEmpty) {
-                    return 'Lütfen email giriniz.';
-                  }
-                },
-                onSaved: (input) => _email = input,
-                decoration: InputDecoration(
-                    labelText: 'Email',
-                    hintText: "Thy email adresinizi giriniz"),
-              ),
+              child: TrackingTextInput(
+                  label: "Email",
+                  hint: "Thy Email adresinizi girin",
+                  onTextChanged: (String value) => _email = value,
+                  onCaretMoved: (Offset caret) {
+                    _teddyController.lookAt(caret);
+                  }),
+              // child: TextFormField(
+              //   validator: (input) {
+              //     if (input.isEmpty) {
+              //       return 'Lütfen email giriniz.';
+              //     }
+              //   },
+              //   onSaved: (input) => _email = input,
+              //   decoration: InputDecoration(
+              //       labelText: 'Email',
+              //       hintText: "Thy email adresinizi giriniz"),
+              //),
             ),
             Flexible(
               flex: 1,
-              child: TextFormField(
-                validator: (input) {
-                  if (input.length < 6) {
-                    return 'Lütfen en az 6 haneli şifre giriniz.';
-                  }
+              child: TrackingTextInput(
+                label: "Şifre",
+                hint: "Daha önceden belirlediğiniz şifrenizi giriniz.",
+                onTextChanged: (String value) => _password = value,
+                onCaretMoved: (Offset caret) {
+                  _teddyController.lookAt(caret);
                 },
-                onSaved: (input) => _password = input,
-                decoration: InputDecoration(
-                  labelText: 'Şifre',
-                ),
-                obscureText: true,
+                isObscured: true,
               ),
+
+              // child: TextFormField(
+              //   validator: (input) {
+              //     if (input.length < 6) {
+              //       return 'Lütfen en az 6 haneli şifre giriniz.';
+              //     }
+              //   },
+              //   onSaved: (input) => _password = input,
+              //   decoration: InputDecoration(
+              //     labelText: 'Şifre',
+              //   ),
+              //   obscureText: true,
+              // ),
             ),
-            Flexible(
-              flex: 1,
-              child: RaisedButton(
-                onPressed: () {
-                  setState(() {
-                    _animationName = "success";
-                  });
-                  signIn(context);
-                },
-                child: Text('Giriş yap'),
-              ),
-            )
+            RaisedButton(
+              onPressed: () {
+                setState(() {});
+                signIn(context);
+              },
+              child: Text('Giriş yap'),
+            ),
           ],
         ),
       ),
@@ -109,6 +121,7 @@ class _LoginPageState extends State<LoginPage> {
             context, MaterialPageRoute(builder: (context) => Home(user: user)));
       } catch (e) {
         print(e.message);
+        _teddyController.play("fail");
       }
     }
   }

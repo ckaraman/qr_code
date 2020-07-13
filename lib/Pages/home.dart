@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
-  const Home({Key key,@required this.user}) : super(key: key);
+  const Home({Key key, @required this.user}) : super(key: key);
   final AuthResult user;
   @override
   _HomeState createState() => _HomeState();

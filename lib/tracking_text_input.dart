@@ -16,12 +16,14 @@ class TrackingTextInput extends StatefulWidget {
       this.onTextChanged,
       this.hint,
       this.label,
+      this.input,
       this.isObscured = false})
       : super(key: key);
   final CaretMoved onCaretMoved;
   final TextChanged onTextChanged;
   final String hint;
   final String label;
+  final String input;
   final bool isObscured;
   @override
   _TrackingTextInputState createState() => _TrackingTextInputState();

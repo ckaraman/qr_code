@@ -4,12 +4,15 @@ import 'package:flutter/cupertino.dart';
 
 class LoginAnimation extends StatelessWidget {
   final FlareController controller;
-  const LoginAnimation({Key key,this.controller});
-  
+  const LoginAnimation({Key key, this.controller});
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: FlareActor('assets/Teddy.flr',alignment: Alignment.topCenter,controller: controller,),
+      child: FlareActor(
+        'assets/Teddy(2).flr',
+        alignment: Alignment.topCenter,
+      ),
     );
   }
 }
