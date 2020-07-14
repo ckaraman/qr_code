@@ -27,7 +27,7 @@ class TeddyController extends FlareControls {
   bool _hasFocus = false;
 
   // Project gaze forward by this many pixels.
-  static const double _projectGaze = 60.0;
+  static const double _projectGaze = 80;
 
   @override
   bool advance(FlutterActorArtboard artboard, double elapsed) {

@@ -2,9 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import '../Pages/home.dart';
-import '../teddy_controller.dart';
-import '../tracking_text_input.dart';
+
+import '../../Animation_control/teddy_controller.dart';
+import '../../Animation_control/tracking_text_input.dart';
+import '../home.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key, this.title}) : super(key: key);
